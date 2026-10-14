@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pyramid Scheme — A quieter kind of social</title>
+<style>
+/* Very simple beginner-level layout */
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+a { color: #0645ad; text-decoration: none; }
+header { background: #234a78; color: white; padding: 15px; }
+header a { color: white; margin-right: 12px; }
+.brand { font-size: 22px; font-weight: bold; display: block; margin-bottom: 12px; }
+.brand-mark, .nav-label, .sidebar-bottom { display: none; }
+.shell { display: block; }
+.sidebar { background: #234a78; padding: 12px; }
+.navlinks { display: flex; flex-wrap: wrap; gap: 12px; }
+.navlinks a { color: white; padding: 4px 0; }
+.main { max-width: 850px; margin: auto; background: white; min-height: 100vh; }
+.topbar { padding: 10px 16px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; align-items: center; }
+.breadcrumb { font-size: 13px; }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; display: inline-grid; place-items: center; background: #ddd; color: #222; font-weight: bold; }
+.content { padding: 18px; }
+.page { display: none; }
+.page.active { display: block; }
+h1 { font-size: 30px; }
+h2 { font-size: 23px; }
+h3 { font-size: 17px; }
+p { line-height: 1.5; }
+.eyebrow { color: #234a78; font-weight: bold; font-size: 12px; }
+.gradient-text { color: #234a78; }
+.muted, .hero-copy p, .form-card .sub { color: #555; }
+.btn { display: inline-block; background: #234a78; color: white; padding: 8px 12px; border: 0; border-radius: 3px; }
+.btn.secondary { background: #eee; color: #222; border: 1px solid #ccc; }
+.btn.danger { background: #a22; }
+.btn.small { padding: 6px 9px; font-size: 13px; }
+.btn.full { width: 100%; margin-top: 8px; }
+.hero { padding: 10px 0 25px; }
+.hero-art { display: none; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+.feature-grid { display: block; }
+.card { background: white; border: 1px solid #ccc; padding: 14px; margin-bottom: 12px; border-radius: 0; box-shadow: none; }
+.feature-icon { display: none; }
+.section-head { margin: 15px 0; }
+.two-col { display: block; }
+.stack { display: block; }
+.field { margin: 12px 0; }
+label { display: block; margin-bottom: 5px; }
+input, textarea { width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid #aaa; border-radius: 2px; font: inherit; }
+textarea { min-height: 80px; }
+.form-card { max-width: 400px; margin: 15px auto; }
+.form-note { text-align: center; font-size: 13px; }
+.error { color: #a22; font-size: 13px; }
+.feed-compose { display: flex; gap: 8px; align-items: flex-start; }
+.compose-main { flex: 1; min-width: 0; }
+.post-head { display: flex; gap: 8px; align-items: center; }
+.post-author { font-weight: bold; }
+.post-time { color: #666; font-size: 12px; }
+.post-body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.post-foot { margin-top: 10px; }
+.like-btn { padding: 5px 9px; border: 1px solid #aaa; background: #eee; }
+.like-btn.liked { background: #f5dada; }
+.statline { padding: 7px 0; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; }
+.profile-cover { height: 60px; background: #ddd; margin-bottom: 12px; }
+.profile-row { display: flex; align-items: center; gap: 10px; }
+.profile-stats { display: flex; gap: 15px; flex-wrap: wrap; }
+.profile-stats strong { display: block; }
+.setting-row { padding: 10px 0; border-bottom: 1px solid #ddd; }
+.setting-icon { display: none; }
+.setting-row p { color: #555; font-size: 13px; }
+.warning { background: #fff4d0; padding: 10px; font-size: 13px; }
+.about-banner { padding: 15px; background: #eee; margin-bottom: 12px; }
+.empty { text-align: center; padding: 20px; color: #555; }
+.footnote { border-top: 1px solid #ccc; padding: 12px; text-align: center; font-size: 12px; color: #555; }
+@media (max-width: 600px) {
+  .content { padding: 12px; }
+  .topbar { gap: 8px; }
+  .breadcrumb { font-size: 11px; }
+  .navlinks { gap: 10px; }
+  h1 { font-size: 27px; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#home" aria-label="Pyramid Scheme home"><span class="brand-mark">◈</span><span class="brand-name">Pyramid Scheme<span class="gradient-text">.</span></span></a>
+    <div class="nav-label">Workspace</div>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="#home" data-page="home"><span>⌂</span><span class="nav-text">Overview</span></a>
+      <a href="#feed" data-page="feed"><span>▤</span><span class="nav-text">Community</span></a>
+      <a href="#profile" data-page="profile"><span>◉</span><span class="nav-text">My profile</span></a>
+      <a href="#privacy" data-page="privacy"><span>⛨</span><span class="nav-text">Privacy center</span></a>
+      <a href="#about" data-page="about"><span>ⓘ</span><span class="nav-text">About Pyramid Scheme</span></a>
+    </nav>
+    <div class="sidebar-bottom"><div class="status"><span class="dot"></span><span class="side-copy">Local mode active</span></div><div class="side-copy">Your space. Your rules.</div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="breadcrumb">PYRAMID SCHEME <span class="muted">/</span> <strong id="crumb">Overview</strong></div>
+      <div class="top-actions"><a class="btn secondary small" href="#login" id="authLink">Log in</a><div class="avatar" id="topAvatar">?</div></div>
+    </header>
+    <main class="content">
+      <section class="page" id="page-home">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow">A more private social space</div>
+            <h1>Your voice.<br><span class="gradient-text">Your space.</span></h1>
+            <p>A social corner built around expression, not extraction. Share a thought, meet your community, and keep your data close.</p>
+            <div class="hero-actions"><a class="btn" href="#signup">Get started <span>↗</span></a><a class="btn secondary" href="#feed">Explore the feed</a></div>
+          </div>
+          <div class="hero-art" aria-hidden="true"><div class="orbit"><div class="shield"><div class="shield-inner">◈</div></div></div><div class="floating-chip chip-one">✦ Privacy by design</div><div class="floating-chip chip-two">◉ Stored on your device</div></div>
+        </div>
+        <div class="section-head"><div><div class="eyebrow">Made for you</div><h2 style="margin:8px 0">A little less noise.</h2></div><p class="muted">Simple tools. Clear boundaries.</p></div>
+        <div class="feature-grid">
+          <article class="card"><div class="feature-icon">◉</div><h3>Privacy comes first</h3><p class="muted">No analytics, tracking pixels, or third-party scripts in this prototype.</p></article>
+          <article class="card"><div class="feature-icon">⌂</div><h3>Your browser, your data</h3><p class="muted">Profiles and posts are saved locally in this browser with localStorage.</p></article>
+          <article class="card"><div class="feature-icon">⌘</div><h3>Simple by design</h3><p class="muted">Built with plain HTML, CSS, and JavaScript—no framework required.</p></article>
+        </div>
+      </section>
+
+      <section class="page" id="page-login">
+        <div class="card form-card">
+          <div class="eyebrow">Welcome back</div><h2 style="margin-top:10px">Good to see you.</h2><p class="sub">Sign in to pick up where you left off.</p>
+          <form id="loginForm">
+            <div class="field"><label for="loginUser">Username</label><input id="loginUser" autocomplete="username" placeholder="Your username" required></div>
+            <div class="field"><label for="loginPass">Password</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Your password" required></div>
+            <p class="error" id="loginMsg" role="status"></p><button class="btn full" type="submit">Enter your space&nbsp; →</button>
+          </form><p class="form-note">New to Pyramid Scheme? <a href="#signup">Create an account</a></p>
+        </div>
+      </section>
+
+      <section class="page" id="page-signup">
+        <div class="card form-card">
+          <div class="eyebrow">Start fresh</div><h2 style="margin-top:10px">Make it yours.</h2><p class="sub">Choose a username and introduce yourself.</p>
+          <form id="signupForm">
+            <div class="field"><label for="signUser">Username</label><input id="signUser" minlength="3" maxlength="24" autocomplete="username" placeholder="At least 3 characters" required></div>
+            <div class="field"><label for="signBio">A little about you <span class="muted">(optional)</span></label><input id="signBio" maxlength="100" placeholder="A sentence, a thought, a vibe…"></div>
+            <div class="field"><label for="signPass">Password</label><input id="signPass" type="password" minlength="6" autocomplete="new-password" placeholder="At least 6 characters" required></div>
+            <p class="error" id="signMsg" role="status"></p><button class="btn full" type="submit">Create my account&nbsp; →</button>
+          </form><p class="form-note">Already have an account? <a href="#login">Log in</a></p>
+        </div>
+      </section>
+
+      <section class="page" id="page-feed">
+        <div class="section-head"><div><div class="eyebrow">The community</div><h2 style="margin:8px 0">The conversation.</h2><p class="muted">Small thoughts can start good things.</p></div><span class="muted" id="feedCount">0 posts</span></div>
+        <div class="two-col">
+          <div class="stack">
+            <div class="card">
+              <form id="postForm" class="feed-compose"><div class="avatar" id="composeAvatar">?</div><div class="compose-main"><label for="postText">What’s on your mind?</label><textarea id="postText" maxlength="280" placeholder="Drop a thought into the world…" required></textarea><div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px"><span class="muted" style="font-size:12px"><span id="charCount">0</span>/280 characters</span><button class="btn small" type="submit">Share post ↗</button></div></div></form>
+            </div>
+            <div id="feed" class="stack"></div>
+          </div>
+          <aside class="stack">
+            <div class="card side-card"><div class="eyebrow">Your space</div><h3 style="margin-top:8px">Community snapshot</h3><div class="statline"><span class="muted">Posts shared</span><strong id="statPosts">0</strong></div><div class="statline"><span class="muted">People here</span><strong id="statUsers">0</strong></div><p class="muted" style="font-size:12px;margin-top:14px">Counts are based on this browser’s local data.</p></div>
+            <div class="card side-card"><div class="feature-icon">✦</div><h3>Keep it kind.</h3><p class="muted">Make room for different perspectives. Think before you post, and keep personal information private.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-profile">
+        <div class="section-head"><div><div class="eyebrow">Your corner</div><h2 style="margin:8px 0">My profile</h2></div><button class="btn secondary small" id="logoutBtn">Log out ↗</button></div>
+        <div class="card" style="margin-bottom:22px"><div class="profile-cover"></div><div class="profile-main"><div class="profile-row"><div class="avatar" id="profileAvatar">?</div><div><h2 id="profileName" style="margin:0 0 3px">@username</h2><p class="muted" id="profileBio" style="margin:0">Your bio goes here.</p></div></div><div class="profile-stats"><div><strong id="postCount">0</strong>Posts</div><div><strong>Local</strong>Account storage</div><div><strong>0</strong>Followers <span class="muted">(demo)</span></div></div></div></div>
+        <div class="section-head"><div><h2 style="margin-bottom:5px">Your posts</h2><p class="muted">Things you’ve shared with the community.</p></div><button class="btn danger small" id="clearBtn">Delete my posts</button></div>
+        <div id="myPosts" class="stack"></div>
+      </section>
+
+      <section class="page" id="page-privacy">
+        <div class="section-head"><div><div class="eyebrow">You’re in control</div><h2 style="margin:8px 0">Privacy center</h2><p class="muted">A clear look at what this prototype does with your data.</p></div></div>
+        <div class="card">
+          <div class="setting-row"><div class="setting-icon">◈</div><div><h3>Local-first storage</h3><p>Profiles, posts, likes, and the signed-in username are stored in your browser using localStorage. They are not synced between devices.</p></div></div>
+          <div class="setting-row"><div class="setting-icon">◎</div><div><h3>No tracking scripts</h3><p>This single-file prototype includes no analytics, advertising pixels, or third-party JavaScript.</p></div></div>
+          <div class="setting-row"><div class="setting-icon">▤</div><div><h3>Posts are rendered as text</h3><p>User-written post content is inserted with textContent rather than interpreted as HTML.</p></div></div>
+          <div class="setting-row"><div class="setting-icon">⌫</div><div><h3>You can clear your content</h3><p>Use “Delete my posts” on your profile, or clear this site’s browser storage to remove all locally saved app data.</p></div></div>
+          <div class="warning">Prototype limitation: passwords are stored in plain text in localStorage. Do not use a real or reused password. A production app needs secure server-side authentication and password hashing. Local storage is not a secure vault.</div>
+        </div>
+      </section>
+
+      <section class="page" id="page-about">
+        <div class="about-banner"><div class="eyebrow">A student-built concept</div><h2 style="margin:10px 0">Meet a different kind of social space.</h2><p class="muted" style="max-width:600px;margin:0">Pyramid Scheme explores what a calmer, privacy-minded social app could look and feel like—without a backend or account server.</p></div>
+        <div class="feature-grid">
+          <article class="card"><div class="feature-icon">✧</div><h3>Our idea</h3><p class="muted">Make it easy to express yourself without building a profile for advertisers.</p></article>
+          <article class="card"><div class="feature-icon">⌘</div><h3>Built with</h3><p class="muted">Semantic HTML, custom CSS, and vanilla JavaScript using localStorage.</p></article>
+          <article class="card"><div class="feature-icon">⚑</div><h3>Project details</h3><p class="muted">Web Development Midterm Exam prototype by Josh Ganhinhin.</p></article>
+        </div>
+        <div class="card" style="margin-top:20px"><h3>Keep the web human.</h3><p class="muted" style="margin-bottom:0">This is a front-end demonstration. It does not provide real multi-user networking: accounts and posts only exist in the browser where they were created.</p></div>
+      </section>
+    </main>
+    <footer class="footnote">PYRAMID SCHEME · A quieter kind of social · Static student prototype</footer>
+  </div>
+</div>
+<script>
+(() => {
+  const read = (key, fallback) => {
+    try { const value = JSON.parse(localStorage.getItem(key)); return value ?? fallback; }
+    catch { return fallback; }
+  };
+  let users = read('pyramidscheme_users', read('users', []));
+  let posts = read('pyramidscheme_posts', read('posts', []));
+  let current = localStorage.getItem('pyramidscheme_current') || localStorage.getItem('current') || null;
+  const saveUsers = () => localStorage.setItem('pyramidscheme_users', JSON.stringify(users));
+  const savePosts = () => localStorage.setItem('pyramidscheme_posts', JSON.stringify(posts));
+  const $ = id => document.getElementById(id);
+  const safe = value => String(value ?? '');
+  const initials = name => safe(name).trim().charAt(0).toUpperCase() || '?';
+  const colors = ['linear-gradient(135deg,#9b5cff,#1ebcce)','linear-gradient(135deg,#f973a5,#825cff)','linear-gradient(135deg,#2dd4bf,#397df6)','linear-gradient(135deg,#ffb86b,#f05f87)'];
+  const avatarStyle = name => colors[(safe(name).charCodeAt(0) || 0) % colors.length];
+  const escapeText = value => safe(value);
+  function pageName(){const hash=location.hash.replace('#','')||'home';return ['home','login','signup','feed','profile','privacy','about'].includes(hash)?hash:'home';}
+  function showPage(){
+    let name=pageName();
+    if(['feed','profile'].includes(name)&&!current) name='login';
+    document.querySelectorAll('.page').forEach(el=>el.classList.toggle('active',el.id==='page-'+name));
+    document.querySelectorAll('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===name));
+    $('crumb').textContent=({home:'Overview',login:'Log in',signup:'Create account',feed:'Community',profile:'My profile',privacy:'Privacy center',about:'About Pyramid Scheme'})[name];
+    $('authLink').textContent=current?('@'+current):'Log in';
+    $('authLink').href=current?'#profile':'#login';
+    $('topAvatar').textContent=current?initials(current):'?';
+    $('topAvatar').style.background=avatarStyle(current||'C');
+    if(name==='feed') renderFeed();
+    if(name==='profile') renderProfile();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function postCard(post,index,own=false){
+    const card=document.createElement('article');card.className='card post';
+    const head=document.createElement('div');head.className='post-head';
+    const avatar=document.createElement('div');avatar.className='avatar';avatar.textContent=initials(post.user);avatar.style.background=avatarStyle(post.user);
+    const details=document.createElement('div');const author=document.createElement('div');author.className='post-author';author.textContent='@'+escapeText(post.user);
+    const time=document.createElement('div');time.className='post-time';time.textContent=escapeText(post.time||'Recently');
+    details.append(author,time);head.append(avatar,details);
+    const body=document.createElement('p');body.className='post-body';body.textContent=escapeText(post.text);
+    const foot=document.createElement('div');foot.className='post-foot';
+    if(!own){
+      const like=document.createElement('button');like.className='like-btn'+(post.likedBy&&post.likedBy.includes(current)?' liked':'');
+      like.textContent='♡ '+(Number(post.likes)||0)+' · Like';
+      like.addEventListener('click',()=>{post.likedBy=Array.isArray(post.likedBy)?post.likedBy:[];if(post.likedBy.includes(current)){post.likedBy=post.likedBy.filter(n=>n!==current);post.likes=Math.max(0,(Number(post.likes)||0)-1);}else{post.likedBy.push(current);post.likes=(Number(post.likes)||0)+1;}savePosts();renderFeed();});
+      foot.append(like);
+    }
+    if(own){
+      const del=document.createElement('button');del.className='like-btn';del.textContent='Delete post';
+      del.addEventListener('click',()=>{posts.splice(index,1);savePosts();renderProfile();});foot.append(del);
+    }
+    card.append(head,body,foot);return card;
+  }
+  function renderFeed(){
+    const feed=$('feed');feed.replaceChildren();
+    const sorted=posts.map((p,i)=>({...p,_index:i})).reverse();
+    $('feedCount').textContent=posts.length+' '+(posts.length===1?'post':'posts');
+    $('statPosts').textContent=posts.length;$('statUsers').textContent=users.length;
+    if(!sorted.length){const empty=document.createElement('div');empty.className='card empty';empty.innerHTML='<span>✧</span><strong>It’s quiet in here.</strong><p>Be the first to share a thought.</p>';feed.append(empty);}
+    sorted.forEach(p=>feed.append(postCard(p,p._index)));
+    $('composeAvatar').textContent=initials(current);$('composeAvatar').style.background=avatarStyle(current);
+  }
+  function renderProfile(){
+    const me=users.find(u=>u.name===current);
+    $('profileName').textContent='@'+current;$('profileBio').textContent=me&&me.bio?me.bio:'No bio yet. Add a little about yourself next time.';
+    $('profileAvatar').textContent=initials(current);$('profileAvatar').style.background=avatarStyle(current);
+    const mine=posts.map((p,i)=>({...p,_index:i})).filter(p=>p.user===current).reverse();
+    $('postCount').textContent=mine.length;
+    const box=$('myPosts');box.replaceChildren();
+    if(!mine.length){const empty=document.createElement('div');empty.className='card empty';empty.innerHTML='<span>◉</span><strong>No posts from you yet.</strong><p>Your next thought can go here.</p><a class="btn small" href="#feed">Go to the feed</a>';box.append(empty);}
+    mine.forEach(p=>box.append(postCard(p,p._index,true)));
+  }
+  $('signupForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=$('signUser').value.trim();const bio=$('signBio').value.trim();const pass=$('signPass').value;
+    if(name.length<3){$('signMsg').textContent='Username must have at least 3 characters.';return;}
+    if(users.some(u=>u.name.toLowerCase()===name.toLowerCase())){$('signMsg').textContent='That username is already taken.';return;}
+    users.push({name,bio,pass});saveUsers();$('signupForm').reset();$('signMsg').textContent='';location.hash='login';
+  });
+  $('loginForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=$('loginUser').value.trim();const pass=$('loginPass').value;
+    const user=users.find(u=>u.name.toLowerCase()===name.toLowerCase()&&u.pass===pass);
+    if(!user){$('loginMsg').textContent='That username and password do not match.';return;}
+    current=user.name;localStorage.setItem('pyramidscheme_current',current);$('loginForm').reset();$('loginMsg').textContent='';location.hash='feed';showPage();
+  });
+  $('postForm').addEventListener('submit',e=>{
+    e.preventDefault();if(!current){location.hash='login';return;}
+    const text=$('postText').value.trim();if(!text)return;
+    posts.push({user:current,text,likes:0,likedBy:[],time:new Date().toLocaleString()});savePosts();$('postText').value='';$('charCount').textContent='0';renderFeed();
+  });
+  $('postText').addEventListener('input',()=>{$('charCount').textContent=$('postText').value.length;});
+  $('logoutBtn').addEventListener('click',()=>{current=null;localStorage.removeItem('pyramidscheme_current');localStorage.removeItem('current');location.hash='home';showPage();});
+  $('clearBtn').addEventListener('click',()=>{
+    if(!current)return;
+    if(!confirm('Delete all your posts? This cannot be undone.'))return;
+    posts=posts.filter(p=>p.user!==current);savePosts();renderProfile();
+  });
+  window.addEventListener('hashchange',showPage);
+  showPage();
+})();
+</script>
+</body>
+</html>
